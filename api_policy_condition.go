@@ -1,4 +1,3 @@
-
 /*
  * Dependency-Track API
  *
@@ -12,11 +11,13 @@ package swagger
 
 import (
 	"context"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
-	"fmt"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -32,21 +33,21 @@ PolicyConditionApiService Creates a new policy condition
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param uuid The UUID of the policy
  * @param optional nil or *PolicyConditionApiCreatePolicyConditionOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of PolicyCondition) - 
+     * @param "Body" (optional.Interface of PolicyCondition) -
 
 @return PolicyCondition
 */
 
-type PolicyConditionApiCreatePolicyConditionOpts struct { 
+type PolicyConditionApiCreatePolicyConditionOpts struct {
 	Body optional.Interface
 }
 
 func (a *PolicyConditionApiService) CreatePolicyCondition(ctx context.Context, uuid string, localVarOptionals *PolicyConditionApiCreatePolicyConditionOpts) (PolicyCondition, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Put")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Put")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue PolicyCondition
 	)
 
@@ -77,10 +78,10 @@ func (a *PolicyConditionApiService) CreatePolicyCondition(ctx context.Context, u
 	}
 	// body params
 	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
+
 		localVarOptionalBody, localVarOptionalBodyok := localVarOptionals.Body.Value().(PolicyCondition)
 		if !localVarOptionalBodyok {
-				return localVarReturnValue, nil, reportError("body should be PolicyCondition")
+			return localVarReturnValue, nil, reportError("body should be PolicyCondition")
 		}
 		localVarPostBody = &localVarOptionalBody
 	}
@@ -94,7 +95,7 @@ func (a *PolicyConditionApiService) CreatePolicyCondition(ctx context.Context, u
 				key = auth.Key
 			}
 			localVarHeaderParams["X-Api-Key"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -115,27 +116,27 @@ func (a *PolicyConditionApiService) CreatePolicyCondition(ctx context.Context, u
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 201 {
 			var v PolicyCondition
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
@@ -145,10 +146,8 @@ func (a *PolicyConditionApiService) CreatePolicyCondition(ctx context.Context, u
 /*
 PolicyConditionApiService Deletes a policy condition
 
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param uuid The UUID of the policy condition to delete
-
-
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param uuid The UUID of the policy condition to delete
 */
 func (a *PolicyConditionApiService) DeletePolicyCondition(ctx context.Context, uuid string) (*http.Response, error) {
 	var (
@@ -156,7 +155,6 @@ func (a *PolicyConditionApiService) DeletePolicyCondition(ctx context.Context, u
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		
 	)
 
 	// create path and map variables
@@ -194,7 +192,7 @@ func (a *PolicyConditionApiService) DeletePolicyCondition(ctx context.Context, u
 				key = auth.Key
 			}
 			localVarHeaderParams["X-Api-Key"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -213,13 +211,12 @@ func (a *PolicyConditionApiService) DeletePolicyCondition(ctx context.Context, u
 		return localVarHttpResponse, err
 	}
 
-
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		return localVarHttpResponse, newErr
 	}
 
@@ -231,21 +228,21 @@ PolicyConditionApiService Updates a policy condition
 
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *PolicyConditionApiUpdatePolicyConditionOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of PolicyCondition) - 
+     * @param "Body" (optional.Interface of PolicyCondition) -
 
 @return PolicyCondition
 */
 
-type PolicyConditionApiUpdatePolicyConditionOpts struct { 
+type PolicyConditionApiUpdatePolicyConditionOpts struct {
 	Body optional.Interface
 }
 
 func (a *PolicyConditionApiService) UpdatePolicyCondition(ctx context.Context, localVarOptionals *PolicyConditionApiUpdatePolicyConditionOpts) (PolicyCondition, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Post")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue PolicyCondition
 	)
 
@@ -275,10 +272,10 @@ func (a *PolicyConditionApiService) UpdatePolicyCondition(ctx context.Context, l
 	}
 	// body params
 	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
+
 		localVarOptionalBody, localVarOptionalBodyok := localVarOptionals.Body.Value().(PolicyCondition)
 		if !localVarOptionalBodyok {
-				return localVarReturnValue, nil, reportError("body should be PolicyCondition")
+			return localVarReturnValue, nil, reportError("body should be PolicyCondition")
 		}
 		localVarPostBody = &localVarOptionalBody
 	}
@@ -292,7 +289,7 @@ func (a *PolicyConditionApiService) UpdatePolicyCondition(ctx context.Context, l
 				key = auth.Key
 			}
 			localVarHeaderParams["X-Api-Key"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -313,30 +310,29 @@ func (a *PolicyConditionApiService) UpdatePolicyCondition(ctx context.Context, l
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 200 {
 			var v PolicyCondition
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
-

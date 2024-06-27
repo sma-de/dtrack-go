@@ -1,4 +1,3 @@
-
 /*
  * Dependency-Track API
  *
@@ -12,12 +11,12 @@ package swagger
 
 import (
 	"context"
+	"fmt"
+	"github.com/antihax/optional"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
-	"fmt"
-	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -32,21 +31,21 @@ AclApiService Adds an ACL mapping
 
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *AclApiAddMappingOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of AclMappingRequest) - 
+     * @param "Body" (optional.Interface of AclMappingRequest) -
 
 @return AclMappingRequest
 */
 
-type AclApiAddMappingOpts struct { 
+type AclApiAddMappingOpts struct {
 	Body optional.Interface
 }
 
 func (a *AclApiService) AddMapping(ctx context.Context, localVarOptionals *AclApiAddMappingOpts) (AclMappingRequest, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Put")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Put")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue AclMappingRequest
 	)
 
@@ -76,10 +75,10 @@ func (a *AclApiService) AddMapping(ctx context.Context, localVarOptionals *AclAp
 	}
 	// body params
 	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
+
 		localVarOptionalBody, localVarOptionalBodyok := localVarOptionals.Body.Value().(AclMappingRequest)
 		if !localVarOptionalBodyok {
-				return localVarReturnValue, nil, reportError("body should be AclMappingRequest")
+			return localVarReturnValue, nil, reportError("body should be AclMappingRequest")
 		}
 		localVarPostBody = &localVarOptionalBody
 	}
@@ -93,7 +92,7 @@ func (a *AclApiService) AddMapping(ctx context.Context, localVarOptionals *AclAp
 				key = auth.Key
 			}
 			localVarHeaderParams["X-Api-Key"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -114,27 +113,27 @@ func (a *AclApiService) AddMapping(ctx context.Context, localVarOptionals *AclAp
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 200 {
 			var v AclMappingRequest
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
@@ -144,11 +143,9 @@ func (a *AclApiService) AddMapping(ctx context.Context, localVarOptionals *AclAp
 /*
 AclApiService Removes an ACL mapping
 
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param teamUuid The UUID of the team to delete the mapping for
- * @param projectUuid The UUID of the project to delete the mapping for
-
-
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param teamUuid The UUID of the team to delete the mapping for
+  - @param projectUuid The UUID of the project to delete the mapping for
 */
 func (a *AclApiService) DeleteMapping(ctx context.Context, teamUuid string, projectUuid string) (*http.Response, error) {
 	var (
@@ -156,7 +153,6 @@ func (a *AclApiService) DeleteMapping(ctx context.Context, teamUuid string, proj
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		
 	)
 
 	// create path and map variables
@@ -195,7 +191,7 @@ func (a *AclApiService) DeleteMapping(ctx context.Context, teamUuid string, proj
 				key = auth.Key
 			}
 			localVarHeaderParams["X-Api-Key"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -214,13 +210,12 @@ func (a *AclApiService) DeleteMapping(ctx context.Context, teamUuid string, proj
 		return localVarHttpResponse, err
 	}
 
-
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		return localVarHttpResponse, newErr
 	}
 
@@ -239,17 +234,17 @@ AclApiService Returns the projects assigned to the specified team
 @return []string
 */
 
-type AclApiRetrieveProjectsOpts struct { 
+type AclApiRetrieveProjectsOpts struct {
 	ExcludeInactive optional.Bool
-	OnlyRoot optional.Bool
+	OnlyRoot        optional.Bool
 }
 
 func (a *AclApiService) RetrieveProjects(ctx context.Context, uuid string, localVarOptionals *AclApiRetrieveProjectsOpts) ([]string, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue []string
 	)
 
@@ -294,7 +289,7 @@ func (a *AclApiService) RetrieveProjects(ctx context.Context, uuid string, local
 				key = auth.Key
 			}
 			localVarHeaderParams["X-Api-Key"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -315,30 +310,29 @@ func (a *AclApiService) RetrieveProjects(ctx context.Context, uuid string, local
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 200 {
 			var v []string
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
-

@@ -1,4 +1,3 @@
-
 /*
  * Dependency-Track API
  *
@@ -12,11 +11,13 @@ package swagger
 
 import (
 	"context"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
-	"fmt"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -32,21 +33,21 @@ ProjectPropertyApiService Creates a new project property
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param uuid The UUID of the project to create a property for
  * @param optional nil or *ProjectPropertyApiCreatePropertyOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of ProjectProperty) - 
+     * @param "Body" (optional.Interface of ProjectProperty) -
 
 @return ProjectProperty
 */
 
-type ProjectPropertyApiCreatePropertyOpts struct { 
+type ProjectPropertyApiCreatePropertyOpts struct {
 	Body optional.Interface
 }
 
 func (a *ProjectPropertyApiService) CreateProperty(ctx context.Context, uuid string, localVarOptionals *ProjectPropertyApiCreatePropertyOpts) (ProjectProperty, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Put")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Put")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue ProjectProperty
 	)
 
@@ -77,10 +78,10 @@ func (a *ProjectPropertyApiService) CreateProperty(ctx context.Context, uuid str
 	}
 	// body params
 	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
+
 		localVarOptionalBody, localVarOptionalBodyok := localVarOptionals.Body.Value().(ProjectProperty)
 		if !localVarOptionalBodyok {
-				return localVarReturnValue, nil, reportError("body should be ProjectProperty")
+			return localVarReturnValue, nil, reportError("body should be ProjectProperty")
 		}
 		localVarPostBody = &localVarOptionalBody
 	}
@@ -94,7 +95,7 @@ func (a *ProjectPropertyApiService) CreateProperty(ctx context.Context, uuid str
 				key = auth.Key
 			}
 			localVarHeaderParams["X-Api-Key"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -115,27 +116,27 @@ func (a *ProjectPropertyApiService) CreateProperty(ctx context.Context, uuid str
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 201 {
 			var v ProjectProperty
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
@@ -148,21 +149,21 @@ ProjectPropertyApiService Deletes a config property
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param uuid The UUID of the project to delete a property from
  * @param optional nil or *ProjectPropertyApiDeletePropertyOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of ProjectProperty) - 
+     * @param "Body" (optional.Interface of ProjectProperty) -
 
 @return ProjectProperty
 */
 
-type ProjectPropertyApiDeletePropertyOpts struct { 
+type ProjectPropertyApiDeletePropertyOpts struct {
 	Body optional.Interface
 }
 
 func (a *ProjectPropertyApiService) DeleteProperty(ctx context.Context, uuid string, localVarOptionals *ProjectPropertyApiDeletePropertyOpts) (ProjectProperty, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Delete")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue ProjectProperty
 	)
 
@@ -193,10 +194,10 @@ func (a *ProjectPropertyApiService) DeleteProperty(ctx context.Context, uuid str
 	}
 	// body params
 	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
+
 		localVarOptionalBody, localVarOptionalBodyok := localVarOptionals.Body.Value().(ProjectProperty)
 		if !localVarOptionalBodyok {
-				return localVarReturnValue, nil, reportError("body should be ProjectProperty")
+			return localVarReturnValue, nil, reportError("body should be ProjectProperty")
 		}
 		localVarPostBody = &localVarOptionalBody
 	}
@@ -210,7 +211,7 @@ func (a *ProjectPropertyApiService) DeleteProperty(ctx context.Context, uuid str
 				key = auth.Key
 			}
 			localVarHeaderParams["X-Api-Key"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -231,27 +232,27 @@ func (a *ProjectPropertyApiService) DeleteProperty(ctx context.Context, uuid str
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 200 {
 			var v ProjectProperty
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
@@ -261,17 +262,17 @@ func (a *ProjectPropertyApiService) DeleteProperty(ctx context.Context, uuid str
 /*
 ProjectPropertyApiService Returns a list of all ProjectProperties for the specified project
 
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param uuid The UUID of the project to retrieve properties for
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param uuid The UUID of the project to retrieve properties for
 
 @return []ProjectProperty
 */
 func (a *ProjectPropertyApiService) GetProperties(ctx context.Context, uuid string) ([]ProjectProperty, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue []ProjectProperty
 	)
 
@@ -310,7 +311,7 @@ func (a *ProjectPropertyApiService) GetProperties(ctx context.Context, uuid stri
 				key = auth.Key
 			}
 			localVarHeaderParams["X-Api-Key"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -331,27 +332,27 @@ func (a *ProjectPropertyApiService) GetProperties(ctx context.Context, uuid stri
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 200 {
 			var v []ProjectProperty
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
@@ -364,21 +365,21 @@ ProjectPropertyApiService Updates a project property
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param uuid The UUID of the project to create a property for
  * @param optional nil or *ProjectPropertyApiUpdatePropertyOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of ProjectProperty) - 
+     * @param "Body" (optional.Interface of ProjectProperty) -
 
 @return ProjectProperty
 */
 
-type ProjectPropertyApiUpdatePropertyOpts struct { 
+type ProjectPropertyApiUpdatePropertyOpts struct {
 	Body optional.Interface
 }
 
 func (a *ProjectPropertyApiService) UpdateProperty(ctx context.Context, uuid string, localVarOptionals *ProjectPropertyApiUpdatePropertyOpts) (ProjectProperty, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Post")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue ProjectProperty
 	)
 
@@ -409,10 +410,10 @@ func (a *ProjectPropertyApiService) UpdateProperty(ctx context.Context, uuid str
 	}
 	// body params
 	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
+
 		localVarOptionalBody, localVarOptionalBodyok := localVarOptionals.Body.Value().(ProjectProperty)
 		if !localVarOptionalBodyok {
-				return localVarReturnValue, nil, reportError("body should be ProjectProperty")
+			return localVarReturnValue, nil, reportError("body should be ProjectProperty")
 		}
 		localVarPostBody = &localVarOptionalBody
 	}
@@ -426,7 +427,7 @@ func (a *ProjectPropertyApiService) UpdateProperty(ctx context.Context, uuid str
 				key = auth.Key
 			}
 			localVarHeaderParams["X-Api-Key"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -447,30 +448,29 @@ func (a *ProjectPropertyApiService) UpdateProperty(ctx context.Context, uuid str
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 200 {
 			var v ProjectProperty
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
-
