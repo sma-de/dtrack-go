@@ -1,4 +1,3 @@
-
 /*
  * Dependency-Track API
  *
@@ -16,6 +15,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -28,18 +29,18 @@ type ViolationanalysisApiService service
 /*
 ViolationanalysisApiService Retrieves a violation analysis trail
 
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param component The UUID of the component
- * @param policyViolation The UUID of the policy violation
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param component The UUID of the component
+  - @param policyViolation The UUID of the policy violation
 
 @return ViolationAnalysis
 */
 func (a *ViolationanalysisApiService) RetrieveAnalysis1(ctx context.Context, component string, policyViolation string) (ViolationAnalysis, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue ViolationAnalysis
 	)
 
@@ -79,7 +80,7 @@ func (a *ViolationanalysisApiService) RetrieveAnalysis1(ctx context.Context, com
 				key = auth.Key
 			}
 			localVarHeaderParams["X-Api-Key"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -100,27 +101,27 @@ func (a *ViolationanalysisApiService) RetrieveAnalysis1(ctx context.Context, com
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 200 {
 			var v ViolationAnalysis
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
@@ -132,21 +133,21 @@ ViolationanalysisApiService Records a violation analysis decision
 
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *ViolationanalysisApiUpdateAnalysis1Opts - Optional Parameters:
-     * @param "Body" (optional.Interface of ViolationAnalysisRequest) - 
+     * @param "Body" (optional.Interface of ViolationAnalysisRequest) -
 
 @return ViolationAnalysis
 */
 
-type ViolationanalysisApiUpdateAnalysis1Opts struct { 
+type ViolationanalysisApiUpdateAnalysis1Opts struct {
 	Body optional.Interface
 }
 
 func (a *ViolationanalysisApiService) UpdateAnalysis1(ctx context.Context, localVarOptionals *ViolationanalysisApiUpdateAnalysis1Opts) (ViolationAnalysis, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Put")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Put")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue ViolationAnalysis
 	)
 
@@ -176,10 +177,10 @@ func (a *ViolationanalysisApiService) UpdateAnalysis1(ctx context.Context, local
 	}
 	// body params
 	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
+
 		localVarOptionalBody, localVarOptionalBodyok := localVarOptionals.Body.Value().(ViolationAnalysisRequest)
 		if !localVarOptionalBodyok {
-				return localVarReturnValue, nil, reportError("body should be ViolationAnalysisRequest")
+			return localVarReturnValue, nil, reportError("body should be ViolationAnalysisRequest")
 		}
 		localVarPostBody = &localVarOptionalBody
 	}
@@ -193,7 +194,7 @@ func (a *ViolationanalysisApiService) UpdateAnalysis1(ctx context.Context, local
 				key = auth.Key
 			}
 			localVarHeaderParams["X-Api-Key"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -214,30 +215,29 @@ func (a *ViolationanalysisApiService) UpdateAnalysis1(ctx context.Context, local
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 200 {
 			var v ViolationAnalysis
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
-
