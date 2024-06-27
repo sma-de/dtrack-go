@@ -28,7 +28,7 @@ type Project struct {
 	Children           []Project             `json:"children,omitempty"`
 	Properties         []ProjectProperty     `json:"properties,omitempty"`
 	Tags               []Tag                 `json:"tags,omitempty"`
-	LastBomImport      string                `json:"lastBomImport,omitempty"`
+	LastBomImport      int64                 `json:"lastBomImport,omitempty"`
 	//LastBomImport time.Time `json:"lastBomImport,omitempty"`
 	LastBomImportFormat    string              `json:"lastBomImportFormat,omitempty"`
 	LastInheritedRiskScore float64             `json:"lastInheritedRiskScore,omitempty"`
