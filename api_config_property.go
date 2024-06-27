@@ -1,4 +1,3 @@
-
 /*
  * Dependency-Track API
  *
@@ -16,6 +15,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -28,16 +29,16 @@ type ConfigPropertyApiService service
 /*
 ConfigPropertyApiService Returns a list of all ConfigProperties for the specified groupName
 
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return []ConfigProperty
 */
 func (a *ConfigPropertyApiService) GetConfigProperties(ctx context.Context) ([]ConfigProperty, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue []ConfigProperty
 	)
 
@@ -75,7 +76,7 @@ func (a *ConfigPropertyApiService) GetConfigProperties(ctx context.Context) ([]C
 				key = auth.Key
 			}
 			localVarHeaderParams["X-Api-Key"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -96,27 +97,27 @@ func (a *ConfigPropertyApiService) GetConfigProperties(ctx context.Context) ([]C
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 200 {
 			var v []ConfigProperty
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
@@ -128,21 +129,21 @@ ConfigPropertyApiService Updates an array of config properties
 
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *ConfigPropertyApiUpdateConfigPropertyOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of []ConfigProperty) - 
+     * @param "Body" (optional.Interface of []ConfigProperty) -
 
 @return []ConfigProperty
 */
 
-type ConfigPropertyApiUpdateConfigPropertyOpts struct { 
+type ConfigPropertyApiUpdateConfigPropertyOpts struct {
 	Body optional.Interface
 }
 
 func (a *ConfigPropertyApiService) UpdateConfigProperty(ctx context.Context, localVarOptionals *ConfigPropertyApiUpdateConfigPropertyOpts) ([]ConfigProperty, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Post")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue []ConfigProperty
 	)
 
@@ -172,10 +173,10 @@ func (a *ConfigPropertyApiService) UpdateConfigProperty(ctx context.Context, loc
 	}
 	// body params
 	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
+
 		localVarOptionalBody, localVarOptionalBodyok := localVarOptionals.Body.Value().([]ConfigProperty)
 		if !localVarOptionalBodyok {
-				return localVarReturnValue, nil, reportError("body should be []ConfigProperty")
+			return localVarReturnValue, nil, reportError("body should be []ConfigProperty")
 		}
 		localVarPostBody = &localVarOptionalBody
 	}
@@ -189,7 +190,7 @@ func (a *ConfigPropertyApiService) UpdateConfigProperty(ctx context.Context, loc
 				key = auth.Key
 			}
 			localVarHeaderParams["X-Api-Key"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -210,27 +211,27 @@ func (a *ConfigPropertyApiService) UpdateConfigProperty(ctx context.Context, loc
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 200 {
 			var v []ConfigProperty
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
@@ -242,21 +243,21 @@ ConfigPropertyApiService Updates a config property
 
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *ConfigPropertyApiUpdateConfigProperty1Opts - Optional Parameters:
-     * @param "Body" (optional.Interface of ConfigProperty) - 
+     * @param "Body" (optional.Interface of ConfigProperty) -
 
 @return ConfigProperty
 */
 
-type ConfigPropertyApiUpdateConfigProperty1Opts struct { 
+type ConfigPropertyApiUpdateConfigProperty1Opts struct {
 	Body optional.Interface
 }
 
 func (a *ConfigPropertyApiService) UpdateConfigProperty1(ctx context.Context, localVarOptionals *ConfigPropertyApiUpdateConfigProperty1Opts) (ConfigProperty, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Post")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
 		localVarReturnValue ConfigProperty
 	)
 
@@ -286,10 +287,10 @@ func (a *ConfigPropertyApiService) UpdateConfigProperty1(ctx context.Context, lo
 	}
 	// body params
 	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
+
 		localVarOptionalBody, localVarOptionalBodyok := localVarOptionals.Body.Value().(ConfigProperty)
 		if !localVarOptionalBodyok {
-				return localVarReturnValue, nil, reportError("body should be ConfigProperty")
+			return localVarReturnValue, nil, reportError("body should be ConfigProperty")
 		}
 		localVarPostBody = &localVarOptionalBody
 	}
@@ -303,7 +304,7 @@ func (a *ConfigPropertyApiService) UpdateConfigProperty1(ctx context.Context, lo
 				key = auth.Key
 			}
 			localVarHeaderParams["X-Api-Key"] = key
-			
+
 		}
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
@@ -324,30 +325,29 @@ func (a *ConfigPropertyApiService) UpdateConfigProperty1(ctx context.Context, lo
 
 	if localVarHttpResponse.StatusCode < 300 {
 		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
-			body: localVarBody,
+			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		
+
 		if localVarHttpResponse.StatusCode == 200 {
 			var v ConfigProperty
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
 				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
-		
+
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
-
